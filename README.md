@@ -163,17 +163,17 @@ function fetchUserDetails(userId)
 	local success, username, value, rap, rank, premium, privacyEnabled, terminated, statsUpdated, lastOnline, lastLocation, roliBadges =
 		module.fetchUserDetails(userId)
 	if success then
-		print(username)       --<< String >>--
-		print(value)          --<< Number >>--
-		print(rap)            --<< Number >>--
-		print(rank)           --<< Number or nil >>--
-		print(premium)        --<< Boolean >>--
-		print(privacyEnabled) --<< Boolean >>--
-		print(terminated)     --<< Boolean >>--
-		print(statsUpdated)   --<< Number (time in ticks) >>--
-		print(lastOnline)     --<< Number (time in ticks) >>--
-		print(lastLocation)   --<< String >>--
-		print(roliBadges)     --<< Table >>--		
+		print(username)
+		print(value)
+		print(rap)
+		print(rank)
+		print(premium)
+		print(privacyEnabled)
+		print(terminated)
+		print(statsUpdated)
+		print(lastOnline)
+		print(lastLocation)
+		print(roliBadges)	
 	end
 end
 

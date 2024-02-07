@@ -14,12 +14,12 @@ Returns a table which includes information about every non-ugc limited in Rolimo
 ~~~lua
 --<< Returns the item table >>--
 function fetchItems()
-	local items = module.fetchItems()
-	if items.Success then
-		return items.Items
-	else
-		warn("Failed to fetch items")
-	end
+    local items = module.fetchItems()
+    if items.Success then
+        return items.Items
+    else
+        warn("Failed to fetch items")
+    end
 end
 
 local itemsTable = fetchItems()
@@ -37,8 +37,8 @@ Returns a plethora of information about the item (RAP, Value, Demand, etc.)
 ~~~lua
 --<< Prints the item details for ROBLOX Madness Face >>--
 function printMadnessFaceDetails()
-  local madnessFace = module.fetchItemDetails(130213380)
-  print("Madness Face RAP: " .. madnessFace.RAP)
+    local madnessFace = module.fetchItemDetails(130213380)
+    print("Madness Face RAP: " .. madnessFace.RAP)
 end
 
 printMadnessFaceDetails()
@@ -55,11 +55,11 @@ Returns what the RAP of an item will be if the item were to be sold at a certain
 ~~~lua
 --<< Returns the changes in RAP if the madness face were to be sold at 1,000 robux >>--
 function madnessFaceRAPChangeFrom1000()
-  local data = module.getRAPChangeFromItem(1000, 130213380)
-  if data.Success then
-    print("Original RAP: " .. data.OriginalRAP)
-    print("Expected RAP: " .. data.ExpectedRAP)
-  end
+    local data = module.getRAPChangeFromItem(1000, 130213380)
+    if data.Success then
+        print("Original RAP: " .. data.OriginalRAP)
+        print("Expected RAP: " .. data.ExpectedRAP)
+    end
 end
 
 madnessFaceRAPChangeFrom1000()
@@ -76,9 +76,9 @@ Same as the previous function but numbers must be inputted manually
 ~~~lua
 --<< Prints the changes in RAP between two numbers (BestPrice, CurrentRAP) >>--
 function getRAPChangeFrom2000IfSoldAt1000()
-  local data = module.getRAPChange(1000, 2000)
-  print("Original RAP: " .. data.OriginalRAP)
-  print("Expected RAP: " .. data.ExpectedRAP)
+    local data = module.getRAPChange(1000, 2000)
+    print("Original RAP: " .. data.OriginalRAP)
+    print("Expected RAP: " .. data.ExpectedRAP)
 end
 
 getRAPChangeFrom2000IfSoldAt1000()
@@ -95,10 +95,10 @@ Returns the current amount of items listed in the Rolimon's database
 ~~~lua
 --<< Prints the current amount of limiteds in the Rolimon's database >>--
 function printItemCount()
-  local data = module.getItemCount()
-  if data.Success then
-    print(data.ItemCount)
-  end
+    local data = module.getItemCount()
+    if data.Success then
+        print(data.ItemCount)
+    end
 end
 
 printItemCount()
@@ -119,10 +119,10 @@ Returns a table which includes every asset the player owns under the following c
 ~~~lua
 --<< Prints a table which includes the players assets >>--
 function fetchPlayerAssets(userId)
-  local data = module.fetchPlayerAssets(userId)
-  if data.Success then
-    print(data.PlayerAssets)
-  end
+    local data = module.fetchPlayerAssets(userId)
+    if data.Success then
+        print(data.PlayerAssets)
+    end
 end
 
 fetchPlayerAssets(491970127)
@@ -139,11 +139,11 @@ Returns information about the provided user if the user is listed on Rolimon's
 ~~~lua
 --<< Prints various information about the player >>--
 function fetchUserDetails(userId)
-  local data = module.fetchUserDetails(userId)
-  if data.Success then
-    print("Is terminated? " .. data.Terminated)		
-    print("Inventory private? " .. data.PrivacyEnabled)
-  end
+    local data = module.fetchUserDetails(userId)
+    if data.Success then
+        print("Is terminated? " .. data.Terminated)		
+        print("Inventory private? " .. data.PrivacyEnabled)
+    end
 end
 
 fetchUserDetails(491970127)

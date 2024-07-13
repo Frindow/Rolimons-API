@@ -33,7 +33,7 @@ fetchItemDetails(ItemId : number)
 ~~~
 Returns a plethora of information about the item (RAP, Value, Demand, etc.)
 >[!IMPORTANT]
->Returns: table
+>**Returns a table with the following values:** Success, Item, Name, Acronym, RAP, Value, DefaultValue, Demand, Trend, Projected, Hyped, Rare
 ~~~lua
 --<< Prints the item details for ROBLOX Madness Face >>--
 function printMadnessFaceDetails()

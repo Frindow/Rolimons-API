@@ -66,7 +66,7 @@ local Rolimons   = require(path.to.rolimons)
 | Key            | URL                                                            |
 | -------------- | -------------------------------------------------------------- |
 | `ItemDetails`  | `https://api.rolimons.com/items/v1/itemdetails`                |
-| `DealActivity` | *(Unused / Coming Soon)*                                       |
+| `DealActivity` | `https://api.rolimons.com/market/v1/dealactivity` _(Unused/Coming soon)_              |
 | `PlayerInfo`   | `https://api.rolimons.com/players/v1/playerinfo/{UserId}`      |
 | `GetRecentAds` | `https://api.rolimons.com/tradeads/v1/getrecentads`            |
 

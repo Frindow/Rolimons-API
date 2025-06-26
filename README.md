@@ -1,98 +1,153 @@
-# Information
-For more information and changelogs, please take a look at this post on the developer forum:
-https://devforum.roblox.com/t/rolimons-api-module/2015062
+# 🚀 Rolimons API Module for Roblox
 
-# Items Module Functions and Usage
+[![Lua Version](https://img.shields.io/badge/Lua-5.1-blue)](https://www.lua.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-## Get Items
-~~~lua
-GetItems()
-~~~
-Returns a table which includes information about every non-ugc limited in Rolimon's database.
->[!IMPORTANT]
->Returns: table
-~~~lua
---<< Print every limited in the item table >>--
-local limiteds = module.GetItems()
-for i, limited in pairs(limiteds) do
-    print(limited)
+A lightweight Roblox Lua module to fetch item, market, and player data from the Rolimons API.
+
+---
+
+## 🔗 Table of Contents
+
+1. [Features](#✨-features)  
+2. [Installation](#📥-installation)  
+3. [Usage](#🛠️-usage)  
+   - [Require & Setup](#require--setup)  
+   - [Functions Overview](#functions-overview)  
+4. [API Endpoints](#🔍-api-endpoints)  
+5. [Examples](#📚-examples)  
+6. [Error Handling](#⚠️-error-handling)  
+7. [Contributing](#🤝-contributing)  
+8. [License](#📄-license)  
+
+---
+
+## ✨ Features
+
+- ✅ Fetch **all** non-UGC limited item details  
+- ✅ Get **single** item stats (RAP, Value, Demand, Trend, etc.)  
+- ✅ Calculate **RAP change** between two prices  
+- ✅ Retrieve **recent trade ads** with tag parsing  
+- ✅ Lookup **player info** (value, RAP, premium status, last online, badges)  
+
+---
+
+## 📥 Installation
+
+1. **Clone** or **download** this repo.  
+2. Copy `API.lua` into your game.  
+3. Enable `HttpService` in your game settings.
+
+---
+
+## 🛠️ Usage
+
+### Require & Setup
+
+```lua
+local HttpService = game:GetService("HttpService")
+local Rolimons   = require(path.to.rolimons)
+```
+
+### Functions Overview
+
+| Function                           | Parameters                        | Returns                              |
+| ---------------------------------- | --------------------------------- | ------------------------------------ |
+| `GetItems()`                       | —                                 | `table` of all limited items         |
+| `GetItemDetails(itemId)`           | `number`                          | `table` with item stats              |
+| `GetRAPChange(oldPrice, newPrice)` | `number, number`                  | `table` of RAP change info           |
+| `GetRecentAds()`                   | —                                 | `table` of recent trade ads          |
+| `GetPlayerInfo(userId)`            | `number`                          | `table` of player metadata           |
+| `GetItemCount()`                   | —                                 | `number` total items in database     |
+
+---
+
+## 🔍 API Endpoints
+
+| Key            | URL                                                            |
+| -------------- | -------------------------------------------------------------- |
+| `ItemDetails`  | `https://api.rolimons.com/items/v1/itemdetails`                |
+| `DealActivity` | *(Unused / Coming Soon)*                                       |
+| `PlayerInfo`   | `https://api.rolimons.com/players/v1/playerinfo/{UserId}`      |
+| `GetRecentAds` | `https://api.rolimons.com/tradeads/v1/getrecentads`            |
+
+---
+
+## 📚 Examples
+
+### 1. Get All Items
+
+```lua
+local items = Rolimons.GetItems()
+for _, item in pairs(items) do
+    print(item.Name, "— RAP:", item.RAP)
 end
-~~~
-<br>
+```
 
-## Get Item Details
-~~~lua
-GetItemDetails(ItemId : number)
-~~~
-Returns a plethora of information about the item (RAP, Value, Demand, etc.)
->[!IMPORTANT]
->**Returns a table with the following values:** Success, Item, Name, Acronym, RAP, Value, DefaultValue, Demand, Trend, Projected, Hyped, Rare
-~~~lua
---<< Prints the item details for ROBLOX Madness Face >>--
-function printMadnessFaceDetails()
-    local madnessFace = module.GetItemDetails(130213380)
-    print("Madness Face RAP: " .. madnessFace.RAP)
+### 2. Get Details for One Item
+
+```lua
+local id = 130213380  -- “Madness Face”
+local info = Rolimons.GetItemDetails(id)
+if info.Success then
+    print(("Name: %s | RAP: %d | Demand: %s | Trend: %s")
+        :format(info.Name, info.RAP, info.Demand, info.Trend))
 end
+```
 
-printMadnessFaceDetails()
-~~~
-<br>
+### 3. Calculate RAP Change
 
-## Get RAP Change
-~~~lua
-GetRAPChange(BestPrice : number, CurrentRap : number)
-~~~
-Returns item RAP changes if sold at x price.
->[!IMPORTANT]
->Returns: table
-~~~lua
---<< Prints the changes in RAP between two numbers (BestPrice, CurrentRAP) >>--
-function getRAPChangeFrom2000IfSoldAt1000()
-    local data = module.GetRAPChange(1000, 2000)
-    print("Original RAP: " .. data.OriginalRAP)
-    print("Expected RAP: " .. data.ExpectedRAP)
+```lua
+local delta = Rolimons.GetRAPChange(2000, 1500)
+print(("Original: %d → Expected: %d (%+.2f%%)")
+    :format(delta.OriginalRAP, delta.ExpectedRAP, delta.PercentChange))
+```
+
+### 4. Fetch Recent Trade Ads
+
+```lua
+local ads = Rolimons.GetRecentAds()
+print("Total ads:", ads.TradeAdCount)
+for _, ad in ipairs(ads.TradeAds) do
+    print(ad.Username, "offers", #ad.OfferingItems, "items")
 end
+```
 
-getRAPChangeFrom2000IfSoldAt1000()
-~~~
-<br>
+### 5. Lookup Player Info
 
-~~~
-Returns the current amount of items listed in the Rolimon's database
->[!IMPORTANT]
->Returns: table
-~~~lua
---<< Prints the current amount of limiteds in the Rolimon's database >>--
-function printItemCount()
-    local data = module.getItemCount()
-    if data.Success then
-        print(data.ItemCount)
-    end
+```lua
+local userId = 491970127
+local player = Rolimons.GetPlayerInfo(userId)
+if player then
+    print(("Player %s — RAP: %d | Premium: %s")
+        :format(player.Name, player.RAP, tostring(player.Premium)))
 end
+```
 
-printItemCount()
-~~~
-<br>
+---
 
-## Get Player Info
-~~~lua
-GetUserDetails(UserId : number)
-~~~
-Returns information about the user under the following conditions:
-- The player is listed on Rolimon's
-- The player's inventory is not private
->[!IMPORTANT]
->Returns: table
-~~~lua
---<< Prints various information about the player >>--
-function GetPlayerInfo(userId)
-    local data = module.GetPlayerInfo(userId)
-    if data.Success then
-        print("Is terminated? " .. data.Terminated)		
-        print("Inventory private? " .. data.PrivacyEnabled)
-    end
-end
+## ⚠️ Error Handling
 
-GetUserDetails(491970127)
-~~~
-<br>
+All network calls use `pcall`. If a request fails or the API returns `success = false`, the module:
+
+- Logs a warning (`warn(...)`)  
+- Returns `nil`  
+
+Be sure to check for `nil` before using returned tables.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo  
+2. Create a feature branch (`git checkout -b feature/YourIdea`)  
+3. Commit your changes (`git commit -am 'Add new feature'`)  
+4. Push to the branch (`git push origin feature/YourIdea`)  
+5. Open a Pull Request  
+
+Please follow standard [semantic versioning](https://semver.org/) and write clear PR titles.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.

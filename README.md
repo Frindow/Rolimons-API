@@ -1,6 +1,6 @@
 # 🚀 Rolimons API Module for Roblox
 
-[![Lua Version](https://img.shields.io/badge/Lua-5.1-blue)](https://www.lua.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Lua Version](https://img.shields.io/badge/Lua-5.1-blue)](https://www.lua.org/) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache-green)](LICENSE)
 
 A lightweight Roblox Lua module to fetch item, market, and player data from the Rolimons API.
 
@@ -150,4 +150,4 @@ Please follow standard [semantic versioning](https://semver.org/) and write clea
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+This project is licensed under the **Apache 2.0 License**. See [LICENSE](LICENSE) for details.
